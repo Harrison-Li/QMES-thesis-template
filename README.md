@@ -1,5 +1,6 @@
 # Announcement
 This is a LaTeX template for QMES undergraduate students (A joint program between NWPU and QMUL)
+[English](README.md)        [Link Text](README_CN.md)
 
 Please note that this is modified by myself, which is slightly different from official version
 
