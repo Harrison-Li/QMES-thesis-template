@@ -84,16 +84,18 @@ citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 
 % Chapter heading format (Major heading)
 \def\@makechapterhead#1{%
-	\vspace*{10\p@}%
+	\vspace*{10\p@}% % Vertical space above heading (adjust as needed)
 	{\parindent \z@ \centering \normalfont
-		\bfseries \@chapapp\space \thechapter\par\nobreak
-		\vspace*{20\p@}%
-		\interlinepenalty\@M
-		\bfseries #1\par\nobreak
-		\vspace{40\p@}
+		\bfseries % Apply bold to the entire line
+		\@chapapp\space \thechapter% % "Chapter X"
+		\quad % Add horizontal space between number and title (you can use \space, \quad, \qquad, or a specific length like 1em)
+		#1% % The Chapter Title
+		\par\nobreak % End the line/paragraph here
+		\vspace{40\p@}% % Vertical space below heading (adjust as needed)
 }}
+
 \def\@makeschapterhead#1{% % For unnumbered chapters like TOC, List of Figures, etc.
-	\vspace*{1\p@}%
+	\vspace*{10\p@}%
 	{\parindent \z@ \centering
 		\normalfont
 		\interlinepenalty\@M
@@ -102,14 +104,14 @@ citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 }}
 
 % Section heading format (Subheading 1)
-\renewcommand\section{\@startsection{section}{1}{\z@}%
+\renewcommand\section{\@startsection{section}{1}{0.5\z@}%
 	{-3.5ex \@plus -1ex \@minus -.2ex}%
 	{2.3ex \@plus.2ex}%
 	{\normalfont\bfseries\raggedright}}
 
 % Subsection heading format (Subheading 2)
-\renewcommand\subsection{\@startsection{subsection}{2}{1.5em}% % 1.5em indent for subsection title if it wraps
-	{-3.25ex\@plus -1ex \@minus -.2ex}%
+\renewcommand\subsection{\@startsection{subsection}{2}{0.5em}%
+	{-0.5ex\@plus -1ex \@minus -.2ex}%  <--- This line, specifically -3.25ex
 	{1.5ex \@plus .2ex}%
 	{\normalfont\bfseries\itshape}}
 
@@ -117,7 +119,7 @@ citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 % Use \@addpunct from LaTeX kernel for more robust punctuation handling
 \let\oldsubsection\subsection
 \renewcommand{\subsection}[1]{%
-    \oldsubsection{#1\@addpunct{.}}% Add period unless title ends in punct already
+	\oldsubsection{#1\ifnum\pdfstrcmp{\pdffilesize{\detokenize{#1}}}{.}=0\else.\fi}%
 }
 
 
@@ -127,10 +129,11 @@ citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 
 % --- Spacing Settings ---
 % Double spacing throughout the document by default
-\doublespace % Use doublespace command from setspace package
+\doublespacing % Use doublespace command from setspace package
 
 % Exception for References and Tables spacing
 % These are executed *after* \begin{document} when the environment starts
+% Exception for References and Tables spacing
 \AtBeginEnvironment{thebibliography}{\singlespacing}
 % Note: \begin{table}...\end{table} is the table environment,
 % applying singlespacing here makes the *content* of the table environment single-spaced.
